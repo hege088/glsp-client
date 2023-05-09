@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    bindAsService, DefaultTypes,
+    DefaultTypes,
     DisposeSubclientAction,
     MouseMoveAction,
     SelectionChangeAction,
@@ -44,7 +44,8 @@ import {DrawSelectionIconCommand, RemoveSelectionIconCommand} from './selection-
 const glspMouseMoveModule = new ContainerModule((bind, _unbind, isBound) => {
     const context = { bind, isBound };
 
-    bindAsService(context, TYPES.IDefaultTool, MouseMoveTool);
+    bind(MouseMoveTool).toSelf().inSingletonScope();
+    bind(TYPES.IDefaultTool).toService(MouseMoveTool);
     configureActionHandler(context, SetViewportAction.KIND, MouseMoveTool);
 
     bind(DrawMousePointerProvider).toSelf().inSingletonScope();
@@ -74,7 +75,8 @@ const glspMouseMoveModule = new ContainerModule((bind, _unbind, isBound) => {
 
     ///
 
-    bindAsService(context, TYPES.IDefaultTool, SelectionChangeTool);
+    bind(SelectionChangeTool).toSelf().inSingletonScope();
+    bind(TYPES.IDefaultTool).toService(SelectionChangeTool);
 
     bind(SelectionIconProvider).toSelf().inSingletonScope();
     configureActionHandler(context, SelectionChangeAction.KIND, SelectionIconProvider);
